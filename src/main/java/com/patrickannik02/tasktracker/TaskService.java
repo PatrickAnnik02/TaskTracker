@@ -12,7 +12,7 @@ public class TaskService {
     }
 
     public void addTask(String description) {
-
+        taskRepository.getTasks().add(task);
     }
 
     public void updateTask(String description) {
