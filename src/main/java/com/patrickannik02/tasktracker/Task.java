@@ -4,18 +4,17 @@ import java.time.LocalDate;
 
 public class Task {
 
-    private final int id;
+    private int id;
     private String description;
     private Status status;
     private final LocalDate createdAt;
     private LocalDate updatedAt;
 
-    public Task(int id, String description, Status status, LocalDate createdAt, LocalDate updatedAt) {
-        this.id = id;
+    public Task(String description) {
         this.description = description;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.status = Status.TODO;
+        this.createdAt = LocalDate.now();
+        this.updatedAt = LocalDate.now();
     }
 
     public int getId() {
@@ -46,8 +45,8 @@ public class Task {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDate updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdatedAt() {
+        this.updatedAt = LocalDate.now();
     }
 
     @Override
