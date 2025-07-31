@@ -8,6 +8,8 @@ public interface ITaskRepository {
 
     public void delete(Task task);
 
+    public Task findById(int id);
+
     public List<Task> findAll();
 
     public List<Task> findAllByStatus(Status status);
