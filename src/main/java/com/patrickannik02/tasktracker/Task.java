@@ -4,13 +4,23 @@ import java.time.LocalDate;
 
 public class Task {
 
-    private final int id;
+    private int id;
     private String description;
     private Status status;
     private final LocalDate createdAt;
     private LocalDate updatedAt;
 
-    public Task(int id, String description, Status status, LocalDate createdAt, LocalDate updatedAt) {
+    // Constructor para tareas nuevas
+    public Task(String description) {
+        this.id = 0;
+        this.description = description;
+        this.status = Status.TODO;
+        this.createdAt = LocalDate.now();
+        this.updatedAt = LocalDate.now();
+    }
+
+    // Constructor para tareas existentes
+    public Task(int id, String description, Status status,  LocalDate createdAt, LocalDate updatedAt) {
         this.id = id;
         this.description = description;
         this.status = status;
@@ -22,12 +32,17 @@ public class Task {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+        setUpdatedAt();
     }
 
     public Status getStatus() {
@@ -36,6 +51,7 @@ public class Task {
 
     public void setStatus(Status status) {
         this.status = status;
+        setUpdatedAt();
     }
 
     public LocalDate getCreatedAt() {
@@ -46,8 +62,8 @@ public class Task {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDate updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdatedAt() {
+        this.updatedAt = LocalDate.now();
     }
 
     @Override
