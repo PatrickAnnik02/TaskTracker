@@ -4,15 +4,18 @@ import java.util.ArrayList;
 
 public class TaskService {
 
-    private Task task;
-    private TaskRepository taskRepository;
+    private final ITaskRepository taskRepository;
 
-    public TaskService (TaskRepository taskRepository) {
+    public TaskService (InMemoryTaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
     public void addTask(String description) {
-
+        if (description == null) {
+            throw new IllegalArgumentException("La descripción de la tarea no puede estar vacía.");
+        }
+        Task newTask = new Task(description);
+        taskRepository.save(newTask);
     }
 
     public void updateTask(String description) {
