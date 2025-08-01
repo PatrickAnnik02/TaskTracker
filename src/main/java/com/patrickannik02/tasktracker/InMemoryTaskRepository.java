@@ -3,6 +3,7 @@ package com.patrickannik02.tasktracker;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class InMemoryTaskRepository implements ITaskRepository {
 
@@ -12,39 +13,47 @@ public class InMemoryTaskRepository implements ITaskRepository {
     @Override
     public void save(Task task) {
         if (task.getId() == 0) {
-            task.setId(idCounter++);
+            task.setId(++idCounter);
             tasks.add(task);
-            idCounter++;
         } else {
-            Task updatedTask = findById(task.getId());
-            updatedTask.setDescription(task.getDescription());
-            updatedTask.setStatus(task.getStatus());
-            updatedTask.setUpdatedAt();
-        }
-    }
-
-    @Override
-    public void delete(Task task) {
-        throw new UnsupportedOperationException("El método delete aún no está completamente implementado.");
-    }
-
-    @Override
-    public Task findById(int id) {
-        for (Task task : tasks) {
-            if (task.getId() == id) {
-                return task;
+            Optional<Task> updatedTask = findById(task.getId());
+            if (updatedTask.isPresent()) {
+                updatedTask.get().setDescription(task.getDescription());
+                updatedTask.get().setStatus(task.getStatus());
+            } else {
+                throw new IllegalArgumentException("No se puede actualizar la tarea. La tarea con el ID pasado no fue encontrada.");
             }
         }
-        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+        tasks.removeIf(task -> task.getId() == id);
+    }
+
+    @Override
+    public Optional<Task> findById(int id) {
+        for (Task task : tasks) {
+            if (task.getId() == id) {
+                return Optional.of(task);
+            }
+        }
+        return Optional.empty();
     }
 
     @Override
     public List<Task> findAll() {
-        throw new UnsupportedOperationException("El método findAll aún no está completamente implementado.");
+        return tasks;
     }
 
     @Override
-    public List<Task> findAllByStatus(Status status) {
-        throw new UnsupportedOperationException("El método findAllByStatus aún no está completamente implementado.");
+    public List<Task> findByStatus(Status status) {
+        List<Task> result = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getStatus().equals(status)) {
+                result.add(task);
+            }
+        }
+        return result;
     }
 }
