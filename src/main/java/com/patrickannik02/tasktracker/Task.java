@@ -42,6 +42,7 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+        setUpdatedAt();
     }
 
     public Status getStatus() {
@@ -50,6 +51,7 @@ public class Task {
 
     public void setStatus(Status status) {
         this.status = status;
+        setUpdatedAt();
     }
 
     public LocalDate getCreatedAt() {
