@@ -1,6 +1,6 @@
 package com.patrickannik02.tasktracker;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class TaskService {
 
@@ -12,29 +12,65 @@ public class TaskService {
 
     public void addTask(String description) {
         if (description == null) {
-            throw new IllegalArgumentException("La descripción de la tarea no puede estar vacía.");
+            throw new IllegalArgumentException("Description of task cannot be empty.");
         }
         Task newTask = new Task(description);
         taskRepository.save(newTask);
     }
 
-    public void updateTask(String description) {
-
+    public void updateTask(int id, String description) {
+        if (description == null) {
+            throw new IllegalArgumentException("Description of task cannot be empty.");
+        } else {
+            taskRepository.findById(id).get().setDescription(description);
+        }
     }
 
-    public void deleteTask() {
-
+    public void deleteTask(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Id of task must be greater than zero.");
+        } else {
+            taskRepository.delete(id);
+        }
     }
 
-    public ArrayList<Task> tasks() {
-        return null;
+    public void markAsToDo(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Id of task must be greater than zero.");
+        } else {
+            taskRepository.findById(id).get().setStatus(Status.TODO);
+        }
     }
 
-    public ArrayList<Task> doneTasks() {
-        return null;
+    public void markAsDone(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Id of task must be greater than zero.");
+        } else {
+            taskRepository.findById(id).get().setStatus(Status.DONE);
+        }
     }
 
-    public ArrayList<Task> pendingTasks() {
-        return null;
+    public void markAsInProgress(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Id of task must be greater than zero.");
+        } else {
+            taskRepository.findById(id).get().setStatus(Status.IN_PROGRESS);
+        }
+    }
+
+    public List<Task> tasks() {
+        return taskRepository.findAll();
+    }
+
+    public List<Task> doneTasks() {
+        return taskRepository.findByStatus(Status.DONE);
+    }
+
+    public List<Task> pendingTasks() {
+        return taskRepository.findByStatus(Status.TODO);
+    }
+
+    public List<Task> inProgressTasks() {
+        return taskRepository.findByStatus(Status.IN_PROGRESS);
     }
 }
