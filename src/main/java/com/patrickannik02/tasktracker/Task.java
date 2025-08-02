@@ -13,7 +13,11 @@ public class Task {
     // Constructor para tareas nuevas
     public Task(String description) {
         this.id = 0;
-        this.description = description;
+        if (description == null || description.isEmpty()) {
+            throw new IllegalArgumentException("Description cannot be null");
+        } else {
+            this.description = description;
+        }
         this.status = Status.TODO;
         this.createdAt = LocalDate.now();
         this.updatedAt = LocalDate.now();
@@ -21,9 +25,21 @@ public class Task {
 
     // Constructor para tareas existentes
     public Task(int id, String description, Status status,  LocalDate createdAt, LocalDate updatedAt) {
-        this.id = id;
-        this.description = description;
-        this.status = status;
+        if (id <= 0) {
+            throw new IllegalArgumentException("Id cannot be negative or zero");
+        } else {
+            this.id = id;
+        }
+        if (description == null) {
+            throw new IllegalArgumentException("Description cannot be null");
+        } else {
+            this.description = description;
+        }
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null");
+        } else {
+            this.status = status;
+        }
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -33,7 +49,11 @@ public class Task {
     }
 
     public void setId(int id) {
-        this.id = id;
+        if (id < 0) {
+            throw new IllegalArgumentException("Id cannot be negative");
+        } else {
+            this.id = id;
+        }
     }
 
     public String getDescription() {
@@ -41,7 +61,11 @@ public class Task {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        if (description == null) {
+            throw new IllegalArgumentException("Description cannot be null");
+        } else {
+            this.description = description;
+        }
         setUpdatedAt();
     }
 
@@ -50,7 +74,11 @@ public class Task {
     }
 
     public void setStatus(Status status) {
-        this.status = status;
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null");
+        } else {
+            this.status = status;
+        }
         setUpdatedAt();
     }
 
