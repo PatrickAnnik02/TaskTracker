@@ -21,7 +21,7 @@ public class InMemoryTaskRepository implements ITaskRepository {
                 updatedTask.get().setDescription(task.getDescription());
                 updatedTask.get().setStatus(task.getStatus());
             } else {
-                throw new IllegalArgumentException("No se puede actualizar la tarea. La tarea con el ID pasado no fue encontrada.");
+                throw new IllegalArgumentException("Task with id " + task.getId() + " does not exist");
             }
         }
     }
