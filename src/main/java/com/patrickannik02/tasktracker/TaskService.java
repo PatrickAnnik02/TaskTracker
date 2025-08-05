@@ -6,7 +6,7 @@ public class TaskService {
 
     private final ITaskRepository taskRepository;
 
-    public TaskService (InMemoryTaskRepository taskRepository) {
+    public TaskService(ITaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class TaskTracker {
     public static void main(String[] args) {
-        InMemoryTaskRepository taskRepository = new InMemoryTaskRepository();
+        ITaskRepository taskRepository = new JSONTaskRepository();
         TaskService taskService = new TaskService(taskRepository);
         CommandProcessor commandProcessor = new CommandProcessor(taskService);
 
