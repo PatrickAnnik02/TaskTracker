@@ -114,10 +114,10 @@ public class CommandProcessor {
             System.out.println("There are not any tasks to show.");
             return;
         }
-        System.out.println("\n--- Task list ---");
+        System.out.println("--- Task list ---");
         for (Task task : tasks) {
-            System.out.println(task.toString());
+            System.out.println("ID: " + task.getId() + " | [" + task.getStatus() + "] " + task.getDescription());
+            System.out.println("Created: " + task.getCreatedAt() + " | Updated: " + task.getUpdatedAt() + "\n");
         }
-        System.out.println("-----------------------\n");
     }
 }
