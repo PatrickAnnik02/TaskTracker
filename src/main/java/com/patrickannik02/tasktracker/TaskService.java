@@ -19,11 +19,16 @@ public class TaskService {
     }
 
     public void updateTask(int id, String description) {
-        if (description == null) {
+        if (description == null || description.trim().isEmpty()) { 
             throw new IllegalArgumentException("Description of task cannot be empty.");
-        } else {
-            taskRepository.findById(id).get().setDescription(description);
         }
+
+        Task updatedTask = taskRepository.findById(id)
+                            .orElseThrow(() -> new IllegalArgumentException("Task not found with id: " + id));
+        
+        updatedTask.setDescription(description);
+        
+        taskRepository.save(updatedTask);
     }
 
     public void deleteTask(int id) {
@@ -37,9 +42,10 @@ public class TaskService {
     public void markAsToDo(int id) {
         if (id <= 0) {
             throw new IllegalArgumentException("Id of task must be greater than zero.");
-        } else {
-            taskRepository.findById(id).get().setStatus(Status.TODO);
         }
+        
+        //taskRepository.findById(id).get().setStatus(Status.TODO);
+        
     }
 
     public void markAsDone(int id) {
