@@ -40,42 +40,15 @@ public class TaskService {
     }
 
     public void markAsToDo(int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("Id of task must be greater than zero.");
-        }
-        
-        Task markAsTodoTask = taskRepository.findById(id)
-                                .orElseThrow(() -> new IllegalArgumentException("Task not found with id: " + id));
-        
-        markAsTodoTask.setStatus(Status.TODO);
-
-        taskRepository.save(markAsTodoTask);
+        changeTaskStatus(id, Status.TODO);
     }
 
     public void markAsDone(int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("Id of task must be greater than zero.");
-        }
-        
-        Task markAsDoneTask = taskRepository.findById(id)
-                                .orElseThrow(() -> new IllegalArgumentException("Task not found with id: " + id));
-        
-        markAsDoneTask.setStatus(Status.DONE);
-
-        taskRepository.save(markAsDoneTask);
+        changeTaskStatus(id, Status.DONE);
     }
 
     public void markAsInProgress(int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("Id of task must be greater than zero.");
-        }
-        
-        Task markAsInProgressTask = taskRepository.findById(id)
-                                .orElseThrow(() -> new IllegalArgumentException("Task not found with id: " + id));
-        
-        markAsInProgressTask.setStatus(Status.IN_PROGRESS);
-
-        taskRepository.save(markAsInProgressTask);
+        changeTaskStatus(id, Status.IN_PROGRESS);
     }
 
     public List<Task> tasks() {
@@ -92,5 +65,17 @@ public class TaskService {
 
     public List<Task> inProgressTasks() {
         return taskRepository.findByStatus(Status.IN_PROGRESS);
+    }
+
+    private void changeTaskStatus(int id, Status newStatus) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Id of task must be greater than zero.");
+        }
+        
+        Task task = taskRepository.findById(id)
+                                .orElseThrow(() -> new IllegalArgumentException("Task not found with id: " + id));
+        
+        task.setStatus(newStatus);
+        taskRepository.save(task);
     }
 }
