@@ -83,6 +83,14 @@ public class CommandProcessor {
                         taskService.markAsDone(id);
                     }
                     break;
+                case "mark-todo":
+                    if (args.length != 2) {
+                        throw new IllegalArgumentException("cannot read the command.");
+                    } else {
+                        int id = Integer.parseInt(args[1]);
+                        taskService.markAsToDo(id);
+                    }
+                    break;
                 case "list":
                     if (args.length == 1) {
                         List<Task> allTasks = taskService.tasks();
