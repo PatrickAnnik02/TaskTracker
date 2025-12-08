@@ -44,24 +44,38 @@ public class TaskService {
             throw new IllegalArgumentException("Id of task must be greater than zero.");
         }
         
-        //taskRepository.findById(id).get().setStatus(Status.TODO);
+        Task markAsTodoTask = taskRepository.findById(id)
+                                .orElseThrow(() -> new IllegalArgumentException("Task not found with id: " + id));
         
+        markAsTodoTask.setStatus(Status.TODO);
+
+        taskRepository.save(markAsTodoTask);
     }
 
     public void markAsDone(int id) {
         if (id <= 0) {
             throw new IllegalArgumentException("Id of task must be greater than zero.");
-        } else {
-            taskRepository.findById(id).get().setStatus(Status.DONE);
         }
+        
+        Task markAsDoneTask = taskRepository.findById(id)
+                                .orElseThrow(() -> new IllegalArgumentException("Task not found with id: " + id));
+        
+        markAsDoneTask.setStatus(Status.DONE);
+
+        taskRepository.save(markAsDoneTask);
     }
 
     public void markAsInProgress(int id) {
         if (id <= 0) {
             throw new IllegalArgumentException("Id of task must be greater than zero.");
-        } else {
-            taskRepository.findById(id).get().setStatus(Status.IN_PROGRESS);
         }
+        
+        Task markAsInProgressTask = taskRepository.findById(id)
+                                .orElseThrow(() -> new IllegalArgumentException("Task not found with id: " + id));
+        
+        markAsInProgressTask.setStatus(Status.IN_PROGRESS);
+
+        taskRepository.save(markAsInProgressTask);
     }
 
     public List<Task> tasks() {
