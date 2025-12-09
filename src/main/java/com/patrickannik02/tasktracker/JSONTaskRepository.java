@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class JSONTaskRepository implements ITaskRepository {
 
@@ -18,10 +18,9 @@ public class JSONTaskRepository implements ITaskRepository {
     private int idCounter = 0;
 
     public JSONTaskRepository() {
-        // Configuración del motor Gson
         this.gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter()) // Enseñamos a manejar fechas
-                .setPrettyPrinting() // Para que el JSON se vea ordenado
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()) 
+                .setPrettyPrinting() 
                 .create();
 
                 this.tasks = new ArrayList<>();

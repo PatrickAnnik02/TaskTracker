@@ -1,14 +1,14 @@
 package com.patrickannik02.tasktracker;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Task {
 
     private int id;
     private String description;
     private Status status;
-    private final LocalDate createdAt;
-    private LocalDate updatedAt;
+    private final LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     // Constructor para tareas nuevas
     public Task(String description) {
@@ -19,12 +19,12 @@ public class Task {
             this.description = description;
         }
         this.status = Status.TODO;
-        this.createdAt = LocalDate.now();
-        this.updatedAt = LocalDate.now();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     // Constructor para tareas existentes
-    public Task(int id, String description, Status status,  LocalDate createdAt, LocalDate updatedAt) {
+    public Task(int id, String description, Status status,  LocalDateTime createdAt, LocalDateTime updatedAt) {
         if (id <= 0) {
             throw new IllegalArgumentException("Id cannot be negative or zero");
         } else {
@@ -82,16 +82,16 @@ public class Task {
         setUpdatedAt();
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public LocalDate getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
     public void setUpdatedAt() {
-        this.updatedAt = LocalDate.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     @Override

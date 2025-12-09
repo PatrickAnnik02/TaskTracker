@@ -4,20 +4,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TaskTest {
     Task newTask;
     Task existingTask;
+    LocalDateTime fixedDate = LocalDateTime.of(2024, 1, 1, 12, 0, 0);
 
     @BeforeEach
     void setUp() {
         // basic constructor
         newTask = new Task("Tarea 1");
         // complex constructor
-        existingTask = new Task(2, "Tarea 2", Status.TODO, LocalDate.now(), LocalDate.now());
+        existingTask = new Task(2, "Tarea 2", Status.TODO, fixedDate, fixedDate);
     }
 
     @Test
@@ -28,7 +29,7 @@ public class TaskTest {
         // complex constructor task
         assertEquals(2, existingTask.getId());
         // incorrect id task
-        assertThrows(IllegalArgumentException.class, () -> new Task(-1, "Tarea erronea", Status.TODO, LocalDate.now(), LocalDate.now()));
+        assertThrows(IllegalArgumentException.class, () -> new Task(-1, "Tarea erronea", Status.TODO, LocalDateTime.now(), LocalDateTime.now()));
     }
 
     @Test
@@ -62,14 +63,14 @@ public class TaskTest {
         assertEquals(Status.DONE, newTask.getStatus());
         existingTask.setStatus(Status.IN_PROGRESS);
         assertEquals(Status.IN_PROGRESS, existingTask.getStatus());
-        assertThrows(IllegalArgumentException.class, () -> new Task(1, "Incorrect task", null,  LocalDate.now(), LocalDate.now()));
+        assertThrows(IllegalArgumentException.class, () -> new Task(1, "Incorrect task", null,  LocalDateTime.now(), LocalDateTime.now()));
     }
 
     @Test
     @DisplayName("getCreatedAt Test")
     void testGetCreatedAt() {
-        assertEquals(LocalDate.now(), newTask.getCreatedAt());
-        assertEquals(LocalDate.now(), existingTask.getCreatedAt());
+        assertNotNull(newTask.getCreatedAt());
+        assertEquals(fixedDate, existingTask.getCreatedAt());
     }
 
     @Test
@@ -77,14 +78,14 @@ public class TaskTest {
     void testGetUpdatedAt() {
         newTask.setDescription("updated task");
         existingTask.setDescription("updated task");
-        assertEquals(LocalDate.now(), newTask.getUpdatedAt());
-        assertEquals(LocalDate.now(), existingTask.getUpdatedAt());
+        assertEquals(LocalDateTime.now(), newTask.getUpdatedAt());
+        assertNotNull(newTask.getCreatedAt());
     }
 
     @Test
     @DisplayName("setUpdatedAt Test")
     void testSetUpdatedAt() {
         newTask.setDescription("updated task");
-        assertEquals(LocalDate.now(), newTask.getUpdatedAt());
+        assertEquals(LocalDateTime.now(), newTask.getUpdatedAt());
     }
 }

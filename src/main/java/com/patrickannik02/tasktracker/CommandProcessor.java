@@ -2,6 +2,7 @@ package com.patrickannik02.tasktracker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 public class CommandProcessor {
     private final TaskService taskService;
@@ -122,10 +123,13 @@ public class CommandProcessor {
             System.out.println("There are not any tasks to show.");
             return;
         }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); 
+
         System.out.println("--- Task list ---");
         for (Task task : tasks) {
             System.out.println("ID: " + task.getId() + " | [" + task.getStatus() + "] " + task.getDescription());
-            System.out.println("Created: " + task.getCreatedAt() + " | Updated: " + task.getUpdatedAt() + "\n");
+            System.out.println("Created: " + task.getCreatedAt().format(formatter) + " | Updated: " + task.getUpdatedAt().format(formatter) + "\n");
         }
     }
 }
