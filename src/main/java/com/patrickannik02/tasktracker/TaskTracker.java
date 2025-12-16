@@ -1,7 +1,5 @@
 package com.patrickannik02.tasktracker;
 
-import java.util.Scanner;
-
 public class TaskTracker {
     public static void main(String[] args) {
         ITaskRepository taskRepository = new JSONTaskRepository();

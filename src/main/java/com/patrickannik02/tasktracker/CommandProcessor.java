@@ -1,6 +1,5 @@
 package com.patrickannik02.tasktracker;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.time.format.DateTimeFormatter;
 

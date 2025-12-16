@@ -1,6 +1,5 @@
 package com.patrickannik02.tasktracker;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
