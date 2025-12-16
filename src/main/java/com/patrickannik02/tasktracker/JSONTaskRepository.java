@@ -12,12 +12,17 @@ import java.time.LocalDateTime;
 
 public class JSONTaskRepository implements ITaskRepository {
 
-    private final String filePath = "tasks.json"; // Definimos la ruta del archivo
-    private final Gson gson; // Nuestro motor configurado
+    private String filePath; 
+    private final Gson gson;
     private List<Task> tasks;
     private int idCounter = 0;
 
     public JSONTaskRepository() {
+        this("tasks.json");
+    }
+
+    public JSONTaskRepository(String filePath) {
+        this.filePath = filePath;
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()) 
                 .setPrettyPrinting() 
